@@ -20,12 +20,59 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset( 'css/_all-skins.min.css' ) }}">
     <style type="text/css">
-      .perfil{
-        position: relative;
-        background: #fff;
-        border: 1px solid #f4f4f4;
-        padding: 20px;
-        margin: 10px 25px;
+      /*====================| Botones |===========================*/
+      .btn-poison {
+        color: #fff;
+        background-color: #605CA8;
+        border-color: #555299;
+      }
+      .btn-poison:focus,
+      .btn-poison.focus {
+        color: #fff;
+        background-color: #4B4982;
+        border-color: #3D3B68;
+      }
+      .btn-poison:hover {
+        color: #fff;
+        background-color: #4B4982;
+        border-color: #3D3B68;
+      }
+      .btn-poison:active,
+      .btn-poison.active,
+      .open > .dropdown-toggle.btn-poison {
+        color: #fff;
+        background-color: #4B4982;
+        border-color: #3D3B68;
+      }
+      .btn-poison:active:hover,
+      .btn-poison.active:hover,
+      .open > .dropdown-toggle.btn-poison:hover,
+      .btn-poison:active:focus,
+      .btn-poison.active:focus,
+      .open > .dropdown-toggle.btn-poison:focus,
+      .btn-poison:active.focus,
+      .btn-poison.active.focus,
+      .open > .dropdown-toggle.btn-poison.focus {
+        color: #fff;
+        background-color: #4B4982;
+        border-color: #3D3B68;
+      }
+      .btn-poison:active,
+      .btn-poison.active,
+      .open > .dropdown-toggle.btn-poison {
+        background-image: none;
+      }
+      .btn-poison.disabled:hover,
+      .btn-poison[disabled]:hover,
+      fieldset[disabled] .btn-poison:hover,
+      .btn-poison.disabled:focus,
+      .btn-poison[disabled]:focus,
+      fieldset[disabled] .btn-poison:focus,
+      .btn-poison.disabled.focus,
+      .btn-poison[disabled].focus,
+      fieldset[disabled] .btn-poison.focus {
+        background-color: #8C16A6;
+        border-color: #6E0984;
       }
     </style>
   </head>
@@ -53,6 +100,16 @@
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
               <!-- User Account: style can be found in dropdown.less -->
+              
+              @if( Auth::user()->role === 'Admin' )
+              <li class="dropdown tasks-menu">
+                <a href="{{ route('users.index') }}#solicitudes">
+                  <i class="fa fa-user-plus"></i>
+                  <span class="label label-warning">{{ count($notUsers) }}</span>
+                </a>
+              </li>
+              @endif
+
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <span class="hidden-xs">{{ Auth::user()->cedula() }}</span>
@@ -94,6 +151,8 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MENÚ</li>
+            
+            @if( Auth::user()->role === 'Admin' )
 
             <li class="treeview">
               <a href="#">
@@ -130,6 +189,9 @@
                 <li><a href="{{ route( 'users.create' ) }}"><i class="fa fa-circle-o"></i>Agregar usuario</a></li>
               </ul>
             </li>
+            
+            @endif
+
             <li>
               <a href="#">
                 <i class="fa fa-info-circle"></i> <span>Acerca De...</span>

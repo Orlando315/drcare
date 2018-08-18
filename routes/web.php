@@ -19,6 +19,11 @@ Route::get( '/' , function () {
 Route::post( 'auth', 'LoginController@login' )->name( 'auth' );
 Route::match( ['get', 'post'], '/logout', 'LoginController@logout' )->name( 'logout' );
 
+Route::post( '/departamentos/get', 'DepartamentosController@getCargos' )->name( 'get_departamento' );
+
+Route::get('/registro', 'UserController@registroPublico')->name( 'registro_publico' );
+Route::post('/registro', 'UserController@StorePublico')->name( 'store_publico' );
+
 Route::group( [ 'middleware' => ['auth', 'access.status'] ], function () {
 
   /* --- Dashboard --- */
@@ -28,13 +33,14 @@ Route::group( [ 'middleware' => ['auth', 'access.status'] ], function () {
   Route::group( ['middleware' => 'access.role:Admin'], function (){
 
     /* --- Departamentos --- */
-    Route::post( '/departamentos/get', 'DepartamentosController@getCargos' )->name( 'get_departamento' );
     Route::resource( '/departamentos', 'DepartamentosController' );
 
     /* --- Cargos --- */
     Route::resource( '/cargos', 'CargosController' );
 
     /* --- Usuarios ---*/
+    Route::patch( '/users/password/{id}', 'UserController@changePassword' )->name( 'users.change_password' );
+    Route::patch( '/users/status/{id}', 'UserController@changeStatus' )->name( 'users.change_status' );
     Route::resource( '/users','UserController' );
   });
 

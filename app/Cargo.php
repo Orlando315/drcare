@@ -16,6 +16,8 @@ class Cargo extends Model
 
     public function usuarios()
     {
-      return $this->hasMany( 'App\User' );
+      return $this->hasMany( 'App\User' )
+                      ->where('status', 'Activo')
+                      ->orWhere('status', 'Inactivo');
     }
 }

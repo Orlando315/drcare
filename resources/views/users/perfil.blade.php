@@ -48,14 +48,14 @@
 @section( 'script' )
  	<script type="text/javascript">
  	$(document).ready(function(){
- 			$("#pp").click(function(event) {
+ 			$('#pp').click(function(event) {
 	 		var bool = this.checked;
-	 		if(bool === true){
-	 			$("#password_fields").show();
-	 			$("#password,#password_confirmation").prop('required',true);
+	 		if( bool ){
+	 			$('#password_fields').show();
+	 			$('#password, #password_confirmation').prop('required', true);
 	 		}else{
-	 			$("#password_fields").hide();
-	 			$("#password,#password_confirmation").prop('required',false).val('');
+	 			$('#password_fields').hide();
+	 			$('#password, #password_confirmation').prop('required', false).val('');
 	 		}
 	 	});
  	});

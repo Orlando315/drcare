@@ -29,11 +29,19 @@
 	        <div class="alert alert-danger">
 	        	<ul>
 	          @foreach( $errors->all() as $error )
-	             <li>{{ $error }}</li>
+              <li>{{ $error }}</li>
 	          @endforeach
 	         	</ul>  
 	        </div>
 	      @endif
+
+        @if(Session::has('flash_message'))
+          <div class="alert {{ Session::get( 'flash_class' ) }}">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong class="text-center">{{ Session::get( 'flash_message' ) }}</strong> 
+          </div>
+        @endif
+
 	      <form action="{{ route( 'auth' ) }}" method="POST">
 	          {{ csrf_field() }}
 	        <div class="form-group has-feedback">

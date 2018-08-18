@@ -17,8 +17,10 @@ class UserController extends Controller
      */
     public function index()
     {
-    	$users = User::all();
-    	return view('users.index',['users'=>$users]);
+    	$users = User::allIn();
+      $notUsers = User::allOut();
+
+    	return view('users.index', ['users' => $users, 'notUsersAll' => $notUsers ]);
     }
 
     /**
@@ -204,5 +206,83 @@ class UserController extends Controller
           'flash_important' => true
         	]);
     	}
+    }
+
+    public function changePassword( $id, Request $request)
+    {
+      $user = User::findOrFail($id);
+
+      $user->password = bcrypt($request->input('password'));
+
+      if($user->save()){
+        return redirect('users/' . $user->id )->with([
+          'flash_message' => 'La contraseña ha sido cambiada correctamente.',
+          'flash_class' => 'alert-success'
+          ]);
+      }else{
+        return redirect('users/' . $user->id )->with([
+          'flash_message' => 'Ha ocurrido un error.',
+          'flash_class' => 'alert-danger',
+          'flash_important' => true
+          ]);
+      }
+    }
+
+    public function changeStatus( $id, Request $request)
+    {
+      $user = User::findOrFail($id);
+
+      $user->status = $request->input( 'status' );
+
+      if($user->save()){
+        return redirect('users/' . $user->id )->with([
+          'flash_message' => 'El Status ha sido cambiada correctamente.',
+          'flash_class' => 'alert-success'
+          ]);
+      }else{
+        return redirect('users/' . $user->id )->with([
+          'flash_message' => 'Ha ocurrido un error.',
+          'flash_class' => 'alert-danger',
+          'flash_important' => true
+          ]);
+      }
+    }
+
+    public function registroPublico()
+    {
+      $departamentos = Departamento::all();
+
+      return view( 'users.public_create', ['departamentos' => $departamentos] );
+    }
+
+    public function storePublico(Request $request)
+    {
+      $this->validate($request, [
+        'nombre' => 'required',
+        'tipo_cedula' => 'required',
+        'cedula' =>'required|min:6|max:10|unique:users',
+        'departamento_id' => 'required',
+        'cargo_id' => 'required',
+        'password' => 'required|confirmed',
+      ]);
+
+      $user = new User;
+
+      $user->fill($request->all());
+      $user->password = bcrypt($request->input('password'));
+      $user->status = 'Procesando';
+      $user->role = 'Usuario';
+
+      if($user->save()){
+        return redirect('/')->with([
+          'flash_message' => 'Solicitud de ingreso enviada correctamente.',
+          'flash_class' => 'alert-success'
+          ]);
+      }else{
+        return redirect('/registroo')->with([
+          'flash_message' => 'Ha ocurrido un error.',
+          'flash_class' => 'alert-danger'
+          ]);
+      }
     }
 }

@@ -33,14 +33,24 @@
           <label class="control-label" class="form-control" for="status">Status: *</label>
           <select id="status" class="form-control" name="status" required>
             <option value="">Seleccione...</option>
+            @if( $user->status != 'Rechazado' )
             <option value="Inactivo"{{ old( 'status' ) == 'Inactivo' ? 'selected' : $user->status == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
             <option value="Activo"{{ old( 'status' ) == 'Activo' ? 'selected' : $user->status == 'Activo' ? 'selected' : '' }}>Activo</option>
+            @endif
+
+            @if( $user->status == 'Procesando' )
+            <option value="Procesando" selected>Procesando</option>
+            @endif
+
+            @if( $user->status == 'Rechazado' )
+            <option value="Rechazado" selected>Rechazado</option>
+            @endif
           </select>
         </div>
 
         <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
           <label class="control-label" for="nombre">Nombre: *</label>
-          <input id="nombre" class="form-control" type="text" name="nombre" value="{{ old( 'nombre' ) ? old( 'nombre' ) : $user->nombre }}" placeholder="Nombres">
+          <input id="nombre" class="form-control" type="text" name="nombre" value="{{ old( 'nombre' ) ? old( 'nombre' ) : $user->nombre }}" placeholder="Nombres" required>
         </div>
 
         <div class="form-group {{ $errors->has( 'tipo_cedula' ) ? 'has-error' : '' }}">

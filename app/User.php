@@ -27,6 +27,34 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /* -- Todos los usuaios en el sistema: Activo o Inactivo --*/
+    public static function allIn()
+    {
+      $users = User::where( 'status', 'Activo' )
+                      ->orWhere( 'status', 'Inactivo' )
+                      ->get();
+
+      return $users;
+    }
+
+    /* -- Todos los usuaios fuera del sistema: Procesando o Rechazado --*/
+    public static function allOut()
+    {
+      $users = User::where( 'status', 'Procesando' )
+                      ->orWhere( 'status', 'Rechazado' )
+                      ->get();
+
+      return $users;
+    }
+
+    public static function usersSolicitudes()
+    {
+      $users = User::where( 'status', 'Procesando' )
+                      ->get();
+
+      return $users;
+    }
+
     public function hasRole( $role ){
       if( $this->role == 'Admin' ){
         return true;
@@ -54,12 +82,15 @@ class User extends Authenticatable
         case 'Inactivo':
           $status = '<span class="label label-default">Inactivo</span>';
           break;
+        case 'Procesando':
+          $status = '<span class="label label-warning">Procesando</span>';
+          break;
         case 'Rechazado':
           $status = '<span class="label label-danger">Rechazado</span>';
           break;
         
         default:
-          $status = '<span class="label label-danger">Rechazado</span>';
+          $status = '<span class="label label-danger">Error</span>';
           break;
       }
 
