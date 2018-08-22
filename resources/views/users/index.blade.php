@@ -48,7 +48,7 @@
           </span>
         </div>
         <div class="box-body">
-          <table class="table data-table table-bordered table-hover">
+          <table class="table data-table table-bordered table-hover" style="width: 100%">
             <thead>
               <tr>
                 <th class="text-center">#</th>
@@ -85,7 +85,7 @@
           <h3 class="box-title"><i class="fa fa-users"></i> Solicitudes de ingreso</h3>
         </div>
         <div class="box-body">
-          <table class="table data-table table-bordered table-hover">
+          <table class="table data-table table-bordered table-hover" style="width: 100%">
             <thead>
               <tr>
                 <th class="text-center">#</th>

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Departamento;
-use App\Cargo;
+use App\ProductoCategoria as Categoria;
+use Illuminate\Support\Facades\Auth as Auth;
 
-class CargosController extends Controller
+class ProductosCategoriasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,7 @@ class CargosController extends Controller
      */
     public function index()
     {
-      $cargos = Cargo::all();
-
-      return view( 'cargos.index', ['cargos' => $cargos] );
+      return redirect('productos');
     }
 
     /**
@@ -27,9 +25,7 @@ class CargosController extends Controller
      */
     public function create()
     {
-      $departamentos = Departamento::all();
-
-      return view( 'cargos.create', ['departamentos' => $departamentos] );
+      return view('categorias.create');
     }
 
     /**
@@ -40,22 +36,22 @@ class CargosController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate( $request, [
-        'departamento_id' => 'required',
-        'cargo' => 'required',
-      ] );
+      $this->validate($request, [
+        'categoria' => 'required'
+      ]);
 
-      $cargo = new Cargo;
+      $categoria = new Categoria;
 
-      $cargo->fill( $request->all() );
+      $categoria->fill($request->all());
+      $categoria->user_id = Auth::user()->id;
 
-      if( $cargo->save() ){
-        return redirect('cargos')->with([
-          'flash_message' => 'Cargo agregado correctamente.',
+      if($categoria->save()){
+        return redirect('productos')->with([
+          'flash_message' => 'Categoria agregado correctamente.',
           'flash_class' => 'alert-success'
           ]);
       }else{
-        return redirect('cargos')->with([
+        return redirect('productos')->with([
           'flash_message' => 'Ha ocurrido un error.',
           'flash_class' => 'alert-danger',
           'flash_important' => true
@@ -71,9 +67,9 @@ class CargosController extends Controller
      */
     public function show($id)
     {
-      $cargo = Cargo::findOrFail( $id );
+      $categoria = Categoria::findOrFail( $id );
 
-      return view( 'cargos.view', ['cargo' => $cargo] );
+      return view('categorias.view', ['categoria' => $categoria]);
     }
 
     /**
@@ -84,10 +80,9 @@ class CargosController extends Controller
      */
     public function edit($id)
     {
-      $cargo = Cargo::findOrFail( $id );
-      $departamentos = Departamento::all();
+      $categoria = Categoria::findOrFail( $id );
 
-      return view( 'cargos.edit', ['cargo' => $cargo, 'departamentos' => $departamentos] );
+      return view('categorias.edit', ['categoria' => $categoria]);
     }
 
     /**
@@ -99,22 +94,22 @@ class CargosController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $cargo = Cargo::findOrFail( $id );
 
-      $this->validate( $request, [
-        'departamento_id' => 'required',
-        'cargo' => 'required',
-      ] );
+      $categoria = Categoria::findOrFail( $id );
 
-      $cargo->fill( $request->all() );
+      $this->validate($request, [
+        'categoria' => 'required'
+      ]);
 
-      if( $cargo->save() ){
-        return redirect('cargos')->with([
-          'flash_message' => 'Cargo modificado correctamente.',
+      $categoria->fill($request->all());
+
+      if($categoria->save()){
+        return redirect('productos')->with([
+          'flash_message' => 'Categoria modificada correctamente.',
           'flash_class' => 'alert-success'
           ]);
       }else{
-        return redirect('cargos')->with([
+        return redirect('productos')->with([
           'flash_message' => 'Ha ocurrido un error.',
           'flash_class' => 'alert-danger',
           'flash_important' => true
@@ -130,28 +125,26 @@ class CargosController extends Controller
      */
     public function destroy($id)
     {
-      $cargo = Cargo::findOrFail( $id );
+      $categoria = Categoria::findOrFail( $id );
 
-      if( $cargo->usuarios()->count() > 0 ){
+      if( $categoria->productos()->count() > 0 ){
         
-        return redirect('cargos')->with([
-          'flash_message' => '¡Error - Este Cargo tiene Usuarios agregados!',
+        return redirect('productos')->with([
+          'flash_message' => '¡Error - Esta Categoria tiene Productos agregados!',
           'flash_class' => 'alert-danger',
           'flash_important' => true,
           ]);
 
       }else{
 
-        if( $cargo->delete() ){
-
-          return redirect('cargos')->with([
-            'flash_message' => 'Cargo eliminado correctamente.',
+        if( $categoria->delete() ){
+          return redirect('productos')->with([
+            'flash_message' => 'Categoria eliminada correctamente.',
             'flash_class' => 'alert-success',
             ]);
 
         }else{
-
-          return redirect('cargos')->with([
+          return redirect('productos')->with([
             'flash_message' => 'Ha ocurrido un error.',
             'flash_class' => 'alert-danger',
             'flash_important' => true,

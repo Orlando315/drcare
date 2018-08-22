@@ -33,11 +33,11 @@
           {{ method_field( 'POST' ) }}
           {{ csrf_field() }}
 
-          <h4>Solicitud de ingreso</h4>
+          <h4>Solicitud de registro</h4>
 
           <div class="form-group {{ $errors->has( 'nombre' ) ? 'has-error' : '' }}">
             <label class="control-label" for="nombre">Nombre: *</label>
-            <input id="nombre" class="form-control" type="text" name="nombre" value="{{ old( 'nombre' ) ? old( 'nombre ' ) : '' }}" placeholder="Nombre">
+            <input id="nombre" class="form-control" type="text" name="nombre" value="{{ old( 'nombre' ) ? old( 'nombre' ) : '' }}" placeholder="Nombre">
           </div>
 
           <div class="form-group {{ $errors->has( 'tipo_cedula' ) ? 'has-error' : '' }}">

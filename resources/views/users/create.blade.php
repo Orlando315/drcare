@@ -12,7 +12,7 @@
   <!-- Formulario -->
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <form class="" action="{{ route( 'users.store' ) }}" method="POST" enctype="multipart/form-data">
+      <form class="" action="{{ route( 'users.store' ) }}" method="POST">
 
         {{ method_field( 'POST' ) }}
         {{ csrf_field() }}
@@ -40,7 +40,7 @@
 
         <div class="form-group {{ $errors->has( 'nombre' ) ? 'has-error' : '' }}">
           <label class="control-label" for="nombre">Nombre: *</label>
-          <input id="nombre" class="form-control" type="text" name="nombre" value="{{ old( 'nombre' ) ? old( 'nombre ' ) : '' }}" placeholder="Nombre" required>
+          <input id="nombre" class="form-control" type="text" name="nombre" value="{{ old( 'nombre' ) ? old( 'nombre' ) : '' }}" placeholder="Nombre" required>
         </div>
 
         <div class="form-group {{ $errors->has( 'tipo_cedula' ) ? 'has-error' : '' }}">

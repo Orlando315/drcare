@@ -275,11 +275,11 @@ class UserController extends Controller
 
       if($user->save()){
         return redirect('/')->with([
-          'flash_message' => 'Solicitud de ingreso enviada correctamente.',
+          'flash_message' => 'Solicitud de registro enviada correctamente.',
           'flash_class' => 'alert-success'
           ]);
       }else{
-        return redirect('/registroo')->with([
+        return redirect('/registro')->with([
           'flash_message' => 'Ha ocurrido un error.',
           'flash_class' => 'alert-danger'
           ]);

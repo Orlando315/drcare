@@ -15,66 +15,12 @@
     <!-- Theme style -->
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/AdminLTE.min.css' ) }}">
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/glyphicons.css' ) }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset( 'plugins/datatables/dataTables.bootstrap.css' ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'plugins/datatables/dataTables.min.css' ) }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'plugins/datatables/RowGroup/css/rowGroup.bootstrap.min.css' ) }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset( 'css/_all-skins.min.css' ) }}">
-    <style type="text/css">
-      /*====================| Botones |===========================*/
-      .btn-poison {
-        color: #fff;
-        background-color: #605CA8;
-        border-color: #555299;
-      }
-      .btn-poison:focus,
-      .btn-poison.focus {
-        color: #fff;
-        background-color: #4B4982;
-        border-color: #3D3B68;
-      }
-      .btn-poison:hover {
-        color: #fff;
-        background-color: #4B4982;
-        border-color: #3D3B68;
-      }
-      .btn-poison:active,
-      .btn-poison.active,
-      .open > .dropdown-toggle.btn-poison {
-        color: #fff;
-        background-color: #4B4982;
-        border-color: #3D3B68;
-      }
-      .btn-poison:active:hover,
-      .btn-poison.active:hover,
-      .open > .dropdown-toggle.btn-poison:hover,
-      .btn-poison:active:focus,
-      .btn-poison.active:focus,
-      .open > .dropdown-toggle.btn-poison:focus,
-      .btn-poison:active.focus,
-      .btn-poison.active.focus,
-      .open > .dropdown-toggle.btn-poison.focus {
-        color: #fff;
-        background-color: #4B4982;
-        border-color: #3D3B68;
-      }
-      .btn-poison:active,
-      .btn-poison.active,
-      .open > .dropdown-toggle.btn-poison {
-        background-image: none;
-      }
-      .btn-poison.disabled:hover,
-      .btn-poison[disabled]:hover,
-      fieldset[disabled] .btn-poison:hover,
-      .btn-poison.disabled:focus,
-      .btn-poison[disabled]:focus,
-      fieldset[disabled] .btn-poison:focus,
-      .btn-poison.disabled.focus,
-      .btn-poison[disabled].focus,
-      fieldset[disabled] .btn-poison.focus {
-        background-color: #8C16A6;
-        border-color: #6E0984;
-      }
-    </style>
+    <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -103,9 +49,11 @@
               
               @if( Auth::user()->role === 'Admin' )
               <li class="dropdown tasks-menu">
-                <a href="{{ route('users.index') }}#solicitudes">
+                <a href="{{ route('users.index') }}#solicitudes" title="Solicitudes de ingreso">
                   <i class="fa fa-user-plus"></i>
+                  @if( count($notUsers) > 0 )
                   <span class="label label-warning">{{ count($notUsers) }}</span>
+                  @endif
                 </a>
               </li>
               @endif
@@ -188,16 +136,23 @@
                 <li><a href="{{ route( 'users.index' ) }}"><i class="fa fa-circle-o"></i>Ver usuarios</a></li>
                 <li><a href="{{ route( 'users.create' ) }}"><i class="fa fa-circle-o"></i>Agregar usuario</a></li>
               </ul>
-            </li>
-            
+            </li>            
             @endif
 
-            <li>
+            <li class="treeview">
               <a href="#">
-                <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
-                <small class="label pull-right bg-yellow">IT</small>
+                <i class="fa fa-cubes"></i>
+                <span>Productos</span>
+                <i class="fa fa-angle-left pull-right"></i>
               </a>
-            </li>       
+              <ul class="treeview-menu">
+                <li><a href="{{ route( 'productos.index' ) }}"><i class="fa fa-circle-o"></i>Ver productos</a></li>
+                @if( Auth::user()->role == 'Admin' || Auth::user()->role == 'Operativo' )
+                <li><a href="{{ route( 'productos.create' ) }}"><i class="fa fa-circle-o"></i>Agregar producto</a></li>
+                @endif
+              </ul>
+            </li>
+  
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -229,19 +184,34 @@
     <!-- AdminLTE App -->
     <script type="text/javascript" src="{{ asset( 'js/app.min.js' ) }}"></script>
     <!-- Data table -->
-    <script type="text/javascript" src="{{ asset( 'plugins/datatables/jquery.dataTables.min.js' ) }}"></script>
-    <script type="text/javascript" src="{{ asset( 'plugins/datatables/dataTables.bootstrap.min.js' ) }}"></script>
+    <script type="text/javascript" src="{{ asset( 'plugins/datatables/datatables.min.js' ) }}"></script>
+    <script type="text/javascript" src="{{ asset( 'plugins/datatables/RowGroup/js/rowGroup.bootstrap.min.js' ) }}"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        //Eliminar alertas que no contengan la clase alert-important luego de 7seg
         $('div.alert').not('.alert-important').delay(7000).slideUp(300);
 
-        //activar Datatable
         $('.data-table').DataTable({
           responsive: true,
           language: {
             url:'{{ asset( "plugins/datatables/spanish.json" ) }}'
           }
+        });
+
+        $('.table-products').DataTable({
+          responsive: true,
+          pageLength: 100,
+          language: {
+            url:'{{ asset( "plugins/datatables/spanish.json" ) }}'
+          },
+          rowGroup: {
+            dataSrc: 1
+          },
+          columnDefs: [
+            {
+              "targets": [ 1 ],
+              "visible": false
+            }
+        ]
         });
       })
     </script>

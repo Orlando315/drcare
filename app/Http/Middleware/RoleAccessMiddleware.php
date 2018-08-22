@@ -13,9 +13,9 @@ class RoleAccessMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, $minRole)
     {
-      if( ! $request->user()->hasRole( $role ) ){
+      if( ! $request->user()->hasRole( $minRole ) ){
         return redirect( 'dashboard' );
       }
 

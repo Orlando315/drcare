@@ -19,17 +19,17 @@
     @if( $user->status == 'Activo' || $user->status == 'Inactivo' )
     <button class="btn btn-flat btn-primary" data-toggle="modal" data-target="#passModal"><i class="fa fa-lock" aria-hidden="true"></i> Cambiar contraseña</button>
     @endif
-
-    @if( $user->status == 'Activo' )
-    <button id="btn-activar" class="btn btn-flat btn-poison" data-toggle="modal" data-target="#activarModal" data-status="Inactivo"><i class="fa fa-close" aria-hidden="true"></i> Inactivar usuario</button>
-    @endif
-
-    @if( $user->status == 'Inactivo' )
-    <button id="btn-activar" class="btn btn-flat btn-poison" data-toggle="modal" data-target="#activarModal" data-status="Activo"><i class="fa fa-check" aria-hidden="true"></i> Activar usuario</button>
-    @endif
     
     @if( Auth::user()->id != $user->id )
-    <button class="btn btn-flat btn-danger" data-toggle="modal" data-target="#delModal"><i class="fa fa-times" aria-hidden="true"></i> Eliminar</button>
+      @if( $user->status == 'Activo' )
+      <button id="btn-activar" class="btn btn-flat btn-poison" data-toggle="modal" data-target="#activarModal" data-status="Inactivo"><i class="fa fa-close" aria-hidden="true"></i> Inactivar usuario</button>
+      @endif
+
+      @if( $user->status == 'Inactivo' )
+      <button id="btn-activar" class="btn btn-flat btn-poison" data-toggle="modal" data-target="#activarModal" data-status="Activo"><i class="fa fa-check" aria-hidden="true"></i> Activar usuario</button>
+      @endif
+
+      <button class="btn btn-flat btn-danger" data-toggle="modal" data-target="#delModal"><i class="fa fa-times" aria-hidden="true"></i> Eliminar</button>
     @endif
   </section>
 
@@ -68,6 +68,46 @@
           </div><!-- /.box-body -->
         </div>
       </div>
+      
+      @if( $user->status != 'Procesando' )
+      <div class="col-md-12">
+        <div class="box box-success">
+          <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-cubes"></i> Productos</h3>
+          </div>
+          <div class="box-body">
+            <table class="table table-products table-bordered table-hover" style="width: 100%">
+              <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center">Categoria</th>
+                  <th class="text-center">Nombre</th>
+                  <th class="text-center">CPE</th>
+                  <th class="text-center">Codigo de Barra</th>
+                  <th class="text-center">Codigo de Producto</th>
+                  <th class="text-center">Accion</th>
+                </tr>
+              </thead>
+              <tbody class="text-center">
+                @foreach( $user->productos()->get() as $d )
+                  <tr>
+                    <td>{{ $loop->index + 1 }}</td>
+                    <td>{{ $d->categoria->categoria }}</td>
+                    <td>{{ $d->nombre }}</td>
+                    <td>{{ $d->cpe }}</td>
+                    <td>{{ $d->codigo_barra }}</td>
+                    <td>{{ $d->codigo_producto }}</td>
+                    <td>
+                      <a class="btn btn-primary btn-flat btn-sm" href="{{ route( 'productos.show', [ 'id' => $d->id ] )}}"><i class="fa fa-search"></i></a>
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      @endif
       
       @if( $user->status == 'Procesando' )
       <div class="col-md-8 col-sm-12">

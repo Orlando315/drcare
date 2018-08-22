@@ -52,7 +52,8 @@
 	          <input id="password" class="form-control" type="password" name="password" placeholder="Password">
 	          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	        </div>
-
+          <p class="text-center">¿Eres trabajador de Dr. Care y necesitas acceder?</p>
+          <p class="text-center">LLena una solicitud de <a href="{{ route('registro_publico') }}" title="Registro">Registro</a>.</p>
 	        <div class="form-group">
 	            <button id="b-login" type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
 	        </div>

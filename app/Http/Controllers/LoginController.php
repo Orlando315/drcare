@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Producto;
 
 class LoginController extends Controller
 {
     public function index()
     {
- 			return view( 'dashboard' );
+      $productos = Producto::all();
+
+ 			return view( 'dashboard', ['productos' => $productos] );
 	 	}
 
 	 public function login(Request $request)
