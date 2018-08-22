@@ -44,15 +44,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
       $this->validate($request, [
-        'role' => 'required',
-        'status' => 'required',
+        'role' => 'required|alpha|in:Admin,Operativo,Usuario',
+        'status' => 'required|alpha|in:Activo,Inactivo',
         'nombre' => 'required',
-        'tipo_cedula' => 'required',
+        'tipo_cedula' => 'required|alpha|in:V,E',
         'cedula' =>'required|min:6|max:10|unique:users',
         'departamento_id' => 'required',
         'cargo_id' => 'required',
-        'password' => 'required',
-        'password_confirmation' => 'same:password',
+        'password' => 'required|confirmed',
       ]);
 
       $user = new User;
@@ -114,10 +113,10 @@ class UserController extends Controller
       $user = User::findOrFail($id);
 
       $this->validate($request, [
-        'role' => 'required',
-        'status' => 'required',
+        'role' => 'required|alpha|in:Admin,Operativo,Usuario',
+        'status' => 'required|alpha|in:Activo,Inactivo,Procesando,Rechazado',
         'nombre' => 'required',
-        'tipo_cedula' => 'required',
+        'tipo_cedula' => 'required|alpha|in:V,E',
         'cedula' =>'required|max:10|unique:users,cedula,'.$user->id.',id',
         'departamento_id' => 'required',
         'cargo_id' => 'required',
@@ -181,8 +180,8 @@ class UserController extends Controller
 
       $this->validate($request, [
         'nombre' => 'required',
-        'tipo_cedula' => 'required',
-        'cedula' =>'required|max:10|unique:users,cedula,'.$user->id.',id',
+        'tipo_cedula' => 'required|alpha|in:V,E',
+        'cedula' =>'required|min:6|max:10|unique:users,cedula,'.$user->id.',id',
       ]);
 
     	$user->fill($request->all());
@@ -259,7 +258,7 @@ class UserController extends Controller
     {
       $this->validate($request, [
         'nombre' => 'required',
-        'tipo_cedula' => 'required',
+        'tipo_cedula' => 'required|alpha|in:V,E',
         'cedula' =>'required|min:6|max:10|unique:users',
         'departamento_id' => 'required',
         'cargo_id' => 'required',

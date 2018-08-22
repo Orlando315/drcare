@@ -26,7 +26,7 @@ class LoginController extends Controller
       if ( Auth::attempt( $request->only( [ 'cedula', 'password' ] ) ) ){
       	return redirect()->intended( 'dashboard' );
       }else{
-      	return redirect()->route( 'login' )->withErrors( '¡Error, Revise sus credenciales!' );
+      	return redirect()->route( 'login' )->withErrors( '¡Error - Revise sus credenciales!' );
       }
 	 }
 
