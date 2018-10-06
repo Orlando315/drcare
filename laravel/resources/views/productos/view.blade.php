@@ -28,7 +28,7 @@
             <p class="text-muted text-center">Imagen</p>
 
             <a title="Descargar documento" href="{{ route( 'get_file', ['producto' => $producto->id, 'file' => 'imagen']  ) }}">
-              <img class="img-responsive pad" src="{{ asset( 'storage/' . $producto->imagen ) }}" alt="{{ $producto->nombre }}" style="margin:0 auto; max-height:150px;">
+              <img class="img-responsive pad" src="{{ asset( $producto->imagen ) }}" alt="{{ $producto->nombre }}" style="margin:0 auto; max-height:150px;">
             </a>
             
 
@@ -113,7 +113,7 @@
         <div class="col-md-4">
           <h4 class="text-center" style="margin-top: 0">Hoja técnica y de seguridad</h4>
           <div class="info-box">
-            <a title="Ver documento" href="{{ url( 'storage/' . $producto->hoja_tecnica_seguridad ) }}" target="_blank">
+            <a title="Ver documento" href="{{ asset( 'storage/' . $producto->hoja_tecnica_seguridad ) }}" target="_blank">
               <div class="info-box-icon bg-red">
                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>    
               </div>

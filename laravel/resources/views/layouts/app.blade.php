@@ -7,7 +7,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Icon 16x16 -->
-    <link rel="icon" type="image/png" sizes="240x240" href="{{ asset( 'img/logo.png' ) }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset( 'images/icon.png' ) }}">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/bootstrap.min.css' ) }}">
     <!-- Font Awesome -->
@@ -22,17 +22,19 @@
     <link rel="stylesheet" href="{{ asset( 'css/_all-skins.min.css' ) }}">
     <link rel="stylesheet" href="{{ asset( 'css/style.css' ) }}">
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-red sidebar-mini">
     <div class="wrapper">
       <header class="main-header">
         <!-- Logo -->
         <a href="{{ route( 'dashboard' ) }}" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini">
-            Dr. Care
+            <img src="{{ asset('images/icon.png') }}" alt="Dr.">
           </span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Dr. Care</b></span>
+          <span class="logo-lg">
+            <img src="{{ asset('images/logo_white.png') }}" alt="Dr. Care">
+          </span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->

@@ -1,17 +1,17 @@
 @extends( 'layouts.app' )
 @section( 'title', 'Departamentos - '.config( 'app.name' ) )
-@section( 'header','Departamentos' )
+@section( 'header','Departamento' )
 @section( 'breadcrumb' )
   <ol class="breadcrumb">
     <li><a href="{{ route( 'dashboard' ) }}"><i class="fa fa-home" aria-hidden="true"></i> Inicio</a></li>
-    <li><a href="{{ route( 'departamentos.index' ) }}" title="Departamentos"> Departamentos </a></li>
+    <li><a href="{{ route( 'departamentos.index' ) }}" title="Departamentos"> Departamento}s </a></li>
     <li class="active">Editar</li>
   </ol>
 @endsection
 @section('content')
     <!-- Formulario -->
     <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-6 col-md-offset-3"
         <form class="" action="{{ route('departamentos.update', [ 'id' => $departamento->id ] ) }}" method="POST">
 
           {{ method_field('PATCH') }}

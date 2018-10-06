@@ -244,3 +244,46 @@ blockquote{
   background-color: red;
 }
 /*==================================================================================*/
+
+.main-header{
+  max-height: 120px;
+}
+.main-header .logo{
+  height: 70px;
+}
+
+.main-header .logo .logo-lg img{
+  height: 60px;
+}
+.main-header .log .logo-mini img{
+  height: auto;
+}
+.sidebar-collapse .main-header .logo{
+  line-height: 70px;
+}
+
+.navbar .sidebar-toggle{
+  padding: 25px;
+}
+
+.main-sidebar{
+  padding-top: 70px;
+}
+.main-sidebar .sidebar-menu > li > a{
+  padding: 15px 5px 15px 15px;
+  font-size: 15px;
+}
+
+@media(max-width: 767px){
+  .navbar .sidebar-toggle{
+    padding: 15px;
+  }
+
+  .main-sidebar{
+    padding-top: 120px;
+  }
+}
+
+.content-header > .breadcrumb{
+  font-size: 14px;
+}
