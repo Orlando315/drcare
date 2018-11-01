@@ -12,7 +12,7 @@
   <section>
     <a class="btn btn-flat btn-default" href="{{ route( 'productos.index' ) }}"><i class="fa fa-reply" aria-hidden="true"></i> Volver</a>
 
-    @if( Auth::user()->role == 'Admin' || Auth::user()->role == 'Operativo' )
+    @if( Auth::user()->role == 'Admin')
     <a class="btn btn-flat btn-success" href="{{ route( 'productos.edit', [ 'id' => $producto->id ] ) }}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</a>
     <button class="btn btn-flat btn-danger" data-toggle="modal" data-target="#delModal"><i class="fa fa-times" aria-hidden="true"></i> Eliminar</button>
     @endif
@@ -22,77 +22,7 @@
     <div class="row">
 
       <div class="col-md-3">
-        <div class="box box-success">
-          <div class="box-body box-profile">
-            <h3 class="profile-username text-center">{{ $producto->nombre }}</h3>
-            <p class="text-muted text-center">Imagen</p>
-
-            <a title="Descargar documento" href="{{ route( 'get_file', ['producto' => $producto->id, 'file' => 'imagen']  ) }}">
-              <img class="img-responsive pad" src="{{ asset( $producto->imagen ) }}" alt="{{ $producto->nombre }}" style="margin:0 auto; max-height:150px;">
-            </a>
-            
-
-            <p class="text-muted text-center">Etiqueta</p>
-            <a title="Descargar documento" href="{{ route( 'get_file', ['producto' => $producto->id, 'file' => 'etiqueta']  ) }}">
-              <img class="img-responsive pad" src="{{ asset( 'storage/' . $producto->etiqueta ) }}" alt="{{ $producto->nombre }}" style="margin:0 auto; max-height:150px;">
-            </a>
-
-            <ul class="list-group list-group-unbordered">
-              <li class="list-group-item">
-                <b>Registrado </b> <span class="pull-right">{{ $producto->created_at }}</span>
-              </li>
-              @if( Auth::user()->role == 'Admin' || Auth::user()->role == 'Operativo' )
-              <li class="list-group-item">
-                <b>Por</b>
-                <span class="pull-right">
-                  <a href="{{ route('users.show', ['id' => $producto->user->id]) }}">
-                    {{ $producto->user->nombre }}
-                  </a>
-                </span>
-              </li>
-              @endif
-              <li class="list-group-item">
-                <b>Categoria </b> <span class="pull-right">{{ $producto->categoria->categoria }}</span>
-              </li>
-              <li class="list-group-item">
-                <b>CPE</b>
-                <span class="pull-right"> {{ $producto->cpe }} </span>
-              </li>
-              <li class="list-group-item">
-                <b>Código de producto</b>
-                <span class="pull-right"> {{ $producto->codigo_producto }} </span>
-              </li>
-              <li class="list-group-item">
-                <b>Código de barra</b>
-                <span class="pull-right"> {{ $producto->codigo_barra }} </span>
-              </li>
-              <li class="list-group-item">
-                <b>Código arancelario</b>
-                <span class="pull-right"> {{ $producto->codigo_arancelario }} </span>
-              </li>
-              <li class="list-group-item">
-                <b>Peso</b>
-                <span class="pull-right"> {{ $producto->peso }} </span>
-              </li>
-              <li class="list-group-item">
-                <b>Volumen</b>
-                <span class="pull-right"> {{ $producto->volumen }} </span>
-              </li>
-              <li class="list-group-item">
-                <b>Subempaque</b>
-                <span class="pull-right"> {{ $producto->subempaque }} </span>
-              </li>
-              <li class="list-group-item">
-                <b>Empaque Master</b>
-                <span class="pull-right"> {{ $producto->empaque_master }} </span>
-              </li>
-              <li class="list-group-item">
-                <b>Cantidad por paleta</b>
-                <span class="pull-right"> {{ $producto->cantidad_paleta }} </span>
-              </li>
-            </ul>
-          </div><!-- /.box-body -->
-        </div>
+        @include(' partials.productosInfo ')
       </div>
 
       <div class="col-md-9" style="padding: 0">
@@ -113,7 +43,7 @@
         <div class="col-md-4">
           <h4 class="text-center" style="margin-top: 0">Hoja técnica y de seguridad</h4>
           <div class="info-box">
-            <a title="Ver documento" href="{{ asset( 'storage/' . $producto->hoja_tecnica_seguridad ) }}" target="_blank">
+            <a title="Ver documento" href="{{ asset( 'laravel/public/uploads/' . $producto->hoja_tecnica_seguridad ) }}" target="_blank">
               <div class="info-box-icon bg-red">
                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>    
               </div>
@@ -129,7 +59,7 @@
         <div class="col-md-4">
           <h4 class="text-center" style="margin-top: 0">Permiso sanitario</h4>
           <div class="info-box">
-            <a title="Ver documento" href="{{ url( 'storage/' . $producto->permiso_sanitario ) }}" target="_blank">
+            <a title="Ver documento" href="{{ url( 'laravel/public/uploads/' . $producto->permiso_sanitario ) }}" target="_blank">
               <div class="info-box-icon bg-red">
                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>    
               </div>
@@ -145,7 +75,7 @@
         <div class="col-md-4">
           <h4 class="text-center" style="margin-top: 0">Declaración jurada</h4>
           <div class="info-box">
-            <a title="Ver documento" href="{{ url( 'storage/' . $producto->declaracion_jurada ) }}" target="_blank">
+            <a title="Ver documento" href="{{ url( 'laravel/public/uploads/' . $producto->declaracion_jurada ) }}" target="_blank">
               <div class="info-box-icon bg-red">
                 <i class="fa fa-file-pdf-o" aria-hidden="true"></i>    
               </div>
@@ -157,10 +87,71 @@
             </div>
           </div>
         </div>
-        
-        @if( Auth::user()->role == 'Admin' || Auth::user()->role == 'Operativo' )
+
+        <div class="col-md-4">
+          <h4 class="text-center" style="margin-top: 0">CPE</h4>
+          <div class="info-box">
+            <a title="Ver documento" href="{{ url( 'laravel/public/uploads/' . $producto->cpe ) }}" target="_blank">
+              <div class="info-box-icon bg-red">
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>    
+              </div>
+            </a>
+            <div class="info-box-content">
+              <a title="Descargar documento" href="{{ route( 'get_file', ['producto' => $producto->id, 'file' => 'cpe']  ) }}">
+                Descargar <i class="fa fa-download" aria-hidden="true"></i>
+              </a>
+              @if($producto->cpe_expiracion)
+                <p><b>Vencimiento:</b> {{$producto->cpe_expiracion}}</p>
+              @endif
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <h4 class="text-center" style="margin-top: 0">Codigo Arancelario</h4>
+          <div class="info-box">
+            <a title="Ver documento" href="{{ url( 'laravel/public/uploads/' . $producto->codigo_arancelario ) }}" target="_blank">
+              <div class="info-box-icon bg-red">
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>    
+              </div>
+            </a>
+            <div class="info-box-content">
+              <a title="Descargar documento" href="{{ route( 'get_file', ['producto' => $producto->id, 'file' => 'codigo_arancelario']  ) }}">
+                Descargar <i class="fa fa-download" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
         <div class="col-md-12" style="padding:0">
-          <h4 class="text-center">Imagenes / Artes</h4>
+          <h3 class="text-center">
+            Permisología
+            @if( Auth::user()->role == 'Admin')
+            <span class="pull-right" style="margin-left: -72px">
+              <a class="btn btn-flat btn-primary btn-sm" href="{{ route( 'carpetas.create', [$producto->id] ) }}"><i class="fa fa-plus" aria-hidden="true"></i> Agregar</a>
+            </span>
+            @endif
+          </h3>
+        </div>
+
+        <div class="col-md-12" style="padding:0">
+          @forelse ($producto->carpetas()->get() as $carpeta)
+          <a href="{{ route('carpetas.show', ['id' => $carpeta->id]) }}">
+            <div class="col-md-2 text-center">
+              <i class="fa fa-folder" aria-hidden="true" style="font-size: 55px;"></i>
+              <p>{{$carpeta->carpeta}}</p>
+            </div>
+          </a>
+          @empty
+          <h4 class="text-muted text-center">No se encontraron registros.</h4>
+          @endforelse
+        </div>
+        
+        <div class="col-md-12" style="padding:0">
+          <h3 class="text-center"> Imagenes / Artes </h3>
+        </div>
+        @if( Auth::user()->role == 'Admin')
+        <div class="col-md-12" style="padding:0">
           <div class="col-md-12">
             <form id="form-add-files" action="{{ route( 'artes.store', ['id' => $producto->id] ) }}" method="POST">
               <input id="dropzone-input" type="file" accept="image/jpeg,image/png,application/postscript,application/pdf" name="files[]" multiple style="display:none">
@@ -196,16 +187,18 @@
         @endif
 
         <div id="product-gallery" class="col-md-12" style="padding:0;margin-top:30px">
-          @foreach( $producto->artes()->get() as $arte )
+          @forelse( $producto->artes()->whereNull('productos_carpetas_id')->get() as $arte )
             {!! $arte->generateThumb() !!}
-          @endforeach
+          @empty
+            <h4 class="text-center text-muted">No se encontraron registros.</h4>
+          @endforelse
         </div>
 
       </div><!-- col-md-8 -->
     </div><!-- row -->
   </section>
 
-  @if( Auth::user()->role == 'Admin' || Auth::user()->role == 'Operativo' )
+  @if( Auth::user()->role == 'Admin')
   <div id="delFileModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="delFileModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -215,7 +208,7 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <form id="delelte-file-form" class="col-md-8 col-md-offset-2" action="#" method="POST">
+            <form id="delete-file-form" class="col-md-8 col-md-offset-2" action="#" method="POST">
               {{ method_field( 'DELETE' ) }}
               {{ csrf_field() }}
               <h4 class="text-center">¿Esta seguro de eliminar este Producto?</h4><br>
@@ -261,7 +254,7 @@
 
 @section( 'scripts' )
 <script type="text/javascript">
-  @if( Auth::user()->role == 'Admin' || Auth::user()->role == 'Operativo' )
+  @if( Auth::user()->role == 'Admin')
   var $form = $('#form-add-files'),
       $photos = $form.find('#dropzone-input'),
       $dropzone = $form.find('.dropzone'),
@@ -291,7 +284,7 @@
                 '<img class="img-responsive" src="' + icon + '" alt="' + icon + '">'+
                 '</a>'+
                 '</div>'+
-                '<p class="text-center"><small>'+ file.nombre +'</small></p>'+
+                '<p class="text-center" style="word-wrap: break-word"><small>'+ file.nombre +'</small></p>'+
                 '</div>';
       };
 
@@ -341,10 +334,10 @@
             alert  = $('.alert'),
             action = '{{ route("artes.index") }}/' + file;
 
-        $('#delelte-file-form').attr('action', action);
+        $('#delete-file-form').attr('action', action);
       });
 
-      $('#delelte-file-form').submit(deleteFile);
+      $('#delete-file-form').submit(deleteFile);
 
     });// Ready
 
@@ -427,7 +420,7 @@
 
             photoThumb.parent().remove();
 
-            var icon = r.file.mime == 'application/postscript' ? illustratorIcon : r.file.mime == 'application/pdf' ? pdfIcon : '{{ url("/") }}/storage/' + r.file.path ;
+            var icon = r.file.mime == 'application/postscript' ? illustratorIcon : r.file.mime == 'application/pdf' ? pdfIcon : '{{ url("/") }}/laravel/public/uploads/' + r.file.path ;
 
             thumb_img = gallery(r.file, icon, r.download);
             $('#product-gallery').append(thumb_img);

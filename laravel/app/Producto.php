@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Producto extends Model
 {
   protected $table = 'productos';
-  protected $primaryKety = 'id';
+  protected $primaryKey = 'id';
 
   protected $fillable = [
     'productos_categorias_id',
@@ -16,6 +16,7 @@ class Producto extends Model
     'descripcion',
     'indicaciones',
     'cpe',
+    'cpe_expiracion',
     'codigo_producto',
     'codigo_barra',
     'codigo_arancelario',
@@ -41,8 +42,30 @@ class Producto extends Model
     return $this->belongsTo('App\ProductoCategoria', 'productos_categorias_id');
   }
 
+  public function carpetas(){
+    return $this->hasMany('App\ProductoCarpeta', 'producto_id');
+  }
+
   public function getFile( $file )
   {
     return Storage::get( $file );
+  }
+
+  public function setCpeExpiracionAttribute($date){
+    $this->attributes['cpe_expiracion'] = $date ? date('Y-m-d', strtotime($date)) : null;
+  }
+
+  public function getCpeExpiracionAttribute($date){
+    return $date ? date('d-m-Y', strtotime($date)) : null;
+  }
+
+  public function codigo_barra(){
+    $download = route('get_file', ['producto' => $this->id, 'file' => 'codigo_barra_imagen']);
+
+    if($this->codigo_barra_imagen){
+      return "<a href='{$download}' title='Descargar imagen'>{$this->codigo_barra}</a>";
+    }
+
+    return $this->codigo_barra;
   }
 }

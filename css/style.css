@@ -287,3 +287,7 @@ blockquote{
 .content-header > .breadcrumb{
   font-size: 14px;
 }
+
+.about-drcare:hover > h3{
+  color: #dd4b39;
+}

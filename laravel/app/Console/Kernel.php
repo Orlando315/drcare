@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+      Commands\SendAboutExpiracionEmails::class,
+      Commands\SendCpeExpiracionEmails::class,
     ];
 
     /**
@@ -24,8 +25,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('SendCpeExpiracionEmails')
+        ->daily('09:00');
+
+        $schedule->command('SendAboutExpiracionEmails')
+        ->daily('09:30');
     }
 
     /**

@@ -21,7 +21,7 @@
 
         <div class="form-group {{ $errors->has( 'departamento' ) ? 'has-error' : '' }}">
           <label class="control-label" for="Departamento">Departamento: *</label>
-          <select id="departamento" class="form-control" name="departamento_id">
+          <select id="departamento" class="form-control" name="departamento_id" required>
             <option value="">Seleccione...</option>
             @foreach($departamentos as $departamento)
               <option value="{{ $departamento->id }}" @if ( old( 'departamento_id' ) ) {{ old( 'departamento_id' ) == $departamento->id ? 'selected' : '' }} @else {{ $departamento->id == $cargo->departamento_id ? 'selected' : '' }} @endif >{{ $departamento->departamento }}</option>
@@ -31,7 +31,7 @@
 
         <div class="form-group {{ $errors->has( 'cargo' ) ? 'has-error' : '' }}">
           <label class="control-label" for="cargo">Cargo: *</label>
-          <input id="cargo" class="form-control" type="text" name="cargo" value="{{ old( 'cargo' ) ? old( 'cargo' ) : $cargo->cargo }}" placeholder="Cargo">
+          <input id="cargo" class="form-control" type="text" name="cargo" value="{{ old( 'cargo' ) ? old( 'cargo' ) : $cargo->cargo }}" placeholder="Cargo" required>
         </div>
 
         @if (count($errors) > 0)
@@ -45,7 +45,7 @@
         @endif
 
         <div class="form-group text-right">
-          <a class="btn btn-flat btn-default" href="{{ route( 'departamentos.index' ) }}"><i class="fa fa-reply"></i> Atras</a>
+          <a class="btn btn-flat btn-default" href="{{ route( 'cargos.index' ) }}"><i class="fa fa-reply"></i> Atras</a>
           <button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
         </div>
       </form>

@@ -17,6 +17,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset( 'css/glyphicons.css' ) }}">
     <link rel="stylesheet" type="text/css" href="{{ asset( 'plugins/datatables/dataTables.min.css' ) }}">
     <link rel="stylesheet" type="text/css" href="{{ asset( 'plugins/datatables/RowGroup/css/rowGroup.bootstrap.min.css' ) }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset( 'plugins/datepicker/css/bootstrap-datepicker3.min.css' ) }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset( 'css/_all-skins.min.css' ) }}">
@@ -101,6 +103,12 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MENÚ</li>
+
+            <li>
+              <a href="{{ route('dashboard') }}">
+                <i class="fa fa-home"></i> Inicio
+              </a>
+            </li>
             
             @if( Auth::user()->role === 'Admin' )
 
@@ -154,6 +162,12 @@
                 @endif
               </ul>
             </li>
+
+            <li>
+              <a href="{{ route('about.index') }}">
+                <i class="fa fa-exclamation-circle"></i> Sobre Dr. Care
+              </a>
+            </li>
   
           </ul>
         </section>
@@ -188,6 +202,9 @@
     <!-- Data table -->
     <script type="text/javascript" src="{{ asset( 'plugins/datatables/datatables.min.js' ) }}"></script>
     <script type="text/javascript" src="{{ asset( 'plugins/datatables/RowGroup/js/rowGroup.bootstrap.min.js' ) }}"></script>
+    <!-- Datepicker -->
+    <script type="text/javascript" src="{{ asset( 'plugins/datepicker/js/bootstrap-datepicker.min.js' ) }}"></script>
+    <script type="text/javascript" src="{{ asset( 'plugins/datepicker/locales/bootstrap-datepicker.es.min.js' ) }}"></script>
     <script type="text/javascript">
       $(document).ready(function(){
         $('div.alert').not('.alert-important').delay(7000).slideUp(300);

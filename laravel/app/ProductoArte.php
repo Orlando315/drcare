@@ -9,7 +9,7 @@ class ProductoArte extends Model
 {
   protected $table = 'productos_artes';
 
-  protected $fillable  = ['producto_id', 'user_id', 'nombre', 'path', 'mime'];
+  protected $fillable  = ['producto_id', 'productos_carpetas_id', 'user_id', 'nombre', 'path', 'mime'];
 
   public function producto()
   {
@@ -24,10 +24,11 @@ class ProductoArte extends Model
   public function generateThumb()
   {
     $image = $this->getImageByMime();
-    $url = asset( $image );
+
+    $url = url('/') . $image;
     $download = $this->getDownloadLink();
 
-    if(Auth::user()->role === 'Admin' || Auth::user()->role === 'Operativo'){
+    if(Auth::user()->role === 'Admin'){
       $button = "<button type='button' title='Borrar archivo' data-file='{$this->id}' class='btn btn-flat btn-danger btn-remove-gallery' data-toggle='modal' data-target='#delFileModal'>
                   <i class='fa fa-times'></i>
                 </button>";
@@ -42,7 +43,7 @@ class ProductoArte extends Model
                   <img class='img-responsive' src='{$url}' alt='{$this->nombre}'>
                 </a>
               </div>
-              <p class='text-center'><small>{$this->nombre}</small></p>
+              <p class='text-center' style='word-wrap: break-word'><small>{$this->nombre}</small></p>
             </div>";
   }
 
@@ -55,18 +56,18 @@ class ProductoArte extends Model
   {
     switch ($this->mime) {
       case 'application/postscript':
-        $url = 'images/illustrator_icon.png';
+        $url = '/images/illustrator_icon.png';
         break;
 
       case 'application/pdf':
-        $url = 'images/pdf_icon.png';
+        $url = '/images/pdf_icon.png';
         break;
       
       default:
-        $url = 'storage/' . $this->path;
+        $url = '/laravel/public/uploads/' . $this->path;
         break;
     }
 
-    return asset( $url );
+    return $url;
   }
 }

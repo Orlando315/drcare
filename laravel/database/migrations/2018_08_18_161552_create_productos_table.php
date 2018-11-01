@@ -25,10 +25,9 @@ class CreateProductosTable extends Migration
         $table->string('descripcion', 300)->nullable();
         $table->string('indicaciones', 300)->nullable();
         /* --- Codigos ---*/
-        $table->string('cpe', 30);
         $table->string('codigo_producto', 30);
         $table->string('codigo_barra', 30);
-        $table->string('codigo_arancelario', 30);
+        $table->string('codigo_barra_imagen', 100)->nullable();
         /* --- Hojas ---*/
         $table->string('hoja_tecnica_seguridad', 100)->nullable();
         $table->string('permiso_sanitario', 100)->nullable();
@@ -40,6 +39,9 @@ class CreateProductosTable extends Migration
         $table->unsignedInteger('cantidad_paleta');
         /* --- Informacion arancelaria ---*/
         $table->string('declaracion_jurada', 100)->nullable();
+        $table->string('cpe', 100)->nullable();
+        $table->date('cpe_expiracion')->nullable();
+        $table->string('codigo_arancelario', 100)->nullable();
 
         $table->timestamps();
       });

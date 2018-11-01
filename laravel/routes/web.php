@@ -30,6 +30,18 @@ Route::group( [ 'middleware' => ['auth', 'access.status'] ], function () {
   /* --- Dashboard --- */
   Route::get( 'dashboard', 'LoginController@index' )->name( 'dashboard' );
 
+  /* --- Representantes --- */
+  Route::get( 'representantes/download/{id}', 'RepresentantesController@getFile' )->name('representantes.getFile');
+
+  /* --- About --- */
+  Route::resource( '/about', 'AboutController' )->only([
+    'index',
+  ]);
+  Route::get( 'about/download/{file}', 'AboutController@getFile' )->name('about.getFile');
+
+  /* --- Carpetas --- */
+  Route::get( '/productos/carpeta/{id}', 'ProductosCarpetasController@show' )->name('carpetas.show');
+
   /* --- Decargar archivos de los productos */
   Route::get( 'productos/{producto}/download/{file}', 'ProductosController@getFile' )->name('get_file');
   Route::get( 'artes/{id}/download', 'ProductosArtesController@getFile' )->name('get_arte_file');
@@ -45,20 +57,59 @@ Route::group( [ 'middleware' => ['auth', 'access.status'] ], function () {
   Route::group( ['middleware' => 'access.role:Operativo'], function (){
 
     /* --- Producto Artes --- */
-    Route::post( '/artes/{id}/upload', 'ProductosArtesController@store' )->name('artes.store');
     Route::get( '/artes', 'ProductosArtesController@index')->name('artes.index');
-    Route::delete( '/artes/{id}', 'ProductosArtesController@destroy')->name('artes.destroy');
 
     /* --- Productos --- */
-    Route::resource( '/productos', 'ProductosController' );
+    Route::resource( '/productos', 'ProductosController' )->only([
+      'index',
+      'create',
+      'store',
+      'show',
+      'getFile'
+    ]);
 
     /* --- Categorias de los productos --- */
     Route::resource( '/categorias', 'ProductosCategoriasController' );
 
   });
 
-  /* --- Solo usuarios Admin --- */
+  /* --- Solo usuarios Admin --- */  
   Route::group( ['middleware' => 'access.role:Admin'], function (){
+    
+    /* --- Carpetas --- */
+    Route::get('/carpetas/create/{producto}', 'ProductosCarpetasController@create')->name('carpetas.create');
+    Route::resource( '/carpetas', 'ProductosCarpetasController' )->only([
+      'store',
+      'edit',
+      'update',
+      'destroy'
+    ]);
+
+    /* --- Representantes --- */
+    Route::resource( '/representantes', 'RepresentantesController' )->only([
+      'index',
+      'create',
+      'store',
+      'destroy'
+    ]);
+    
+    /* --- About --- */
+    Route::resource( '/about', 'AboutController' )->only([
+      'edit',
+      'update'
+    ]);
+
+
+    /* --- Producto Artes --- */
+    Route::post( '/artes/{id}/upload', 'ProductosArtesController@store' )->name('artes.store');
+    Route::delete( '/artes/{id}', 'ProductosArtesController@destroy')->name('artes.destroy');
+
+    /* --- Productos --- */
+    Route::resource( '/productos', 'ProductosController' )->only([
+      'edit',
+      'update',
+      'destroy'
+    ]);
 
     /* --- Departamentos --- */
     Route::resource( '/departamentos', 'DepartamentosController' );

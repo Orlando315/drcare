@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth as Auth;
+use Illuminate\Support\Facades\Auth;
 use App\ProductoArte as Arte;
 use App\Producto;
+use App\ProductoCarpeta as Carpeta;
 
 class ProductosArtesController extends Controller
 {
@@ -59,6 +60,18 @@ class ProductosArtesController extends Controller
       if( $producto->artes()->save($arte) ){
 
         $directory = 'producto' . $producto->id;
+
+        if($request->has('carpeta_id')){
+          $carpeta = Carpeta::find($request->carpeta_id);
+
+          $directory .= '/' . $carpeta->carpeta;
+
+          if(!Storage::exists($directory)){
+            Storage::makeDirectory($directory);
+          }
+          $arte->productos_carpetas_id = $request->carpeta_id;
+        }
+
         $arte->nombre = $this->cleanOriginalName( $request->file->getClientOriginalName() );
 
         $name = $this->createName($request->file->getClientOriginalName(), $ext);

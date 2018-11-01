@@ -21,7 +21,7 @@
 
         <div class="form-group {{ $errors->has( 'departamento' ) ? 'has-error' : '' }}">
           <label class="control-label" for="Departamento">Departamento: *</label>
-          <select id="departamento" class="form-control" name="departamento_id">
+          <select id="departamento" class="form-control" name="departamento_id" required>
             <option value="">Seleccione...</option>
             @foreach($departamentos as $departamento)
               <option value="{{ $departamento->id }}">{{ $departamento->departamento }}</option>
@@ -31,7 +31,7 @@
 
         <div class="form-group {{ $errors->has( 'cargo' ) ? 'has-error' : '' }}">
           <label class="control-label" for="cargo">Cargo: *</label>
-          <input id="cargo" class="form-control" type="text" name="cargo" value="{{ old('cargo') ? old('cargo') : '' }}" placeholder="Cargo">
+          <input id="cargo" class="form-control" type="text" name="cargo" value="{{ old('cargo') ? old('cargo') : '' }}" placeholder="Cargo" required>
         </div>
 
         @if (count($errors) > 0)

@@ -92,31 +92,25 @@
             <h4 class="text-center" style="margin-top: 20px">Códigos</h4>
           </div>
 
-          <div class="col-md-3">
-            <div class="form-group {{ $errors->has( 'cpe' ) ? 'has-error' : '' }}">
-              <label class="control-label" for="cpe">CPE: *</label>
-              <input id="cpe" class="form-control" type="text" name="cpe" maxlength="30" value="{{ old( 'cpe' ) ? old( 'cpe' ) : '' }}" placeholder="CPE" required>
-            </div>
-          </div>
+          <div class="col-md-12">
 
-          <div class="col-md-3">
-            <div class="form-group {{ $errors->has( 'codigo_producto' ) ? 'has-error' : '' }}">
-              <label class="control-label" for="codigo_producto">Código de producto: *</label>
-              <input id="codigo_producto" class="form-control" type="text" name="codigo_producto" maxlength="30" value="{{ old( 'codigo_producto' ) ? old( 'codigo_producto' ) : '' }}" placeholder="Código de producto" required>
-            </div>
-          </div>
+            <div class="col-md-3">
+              <div class="form-group {{ $errors->has( 'codigo_barra' ) ? 'has-error' : '' }}">
+                <label class="control-label" for="codigo_barra">Código de barra: *</label>
+                <input id="codigo_barra" class="form-control" type="text" name="codigo_barra" maxlength="30" value="{{ old( 'codigo_barra' ) ? old( 'codigo_barra' ) : '' }}" placeholder="Código de barra" required>
+              </div>
 
-          <div class="col-md-3">
-            <div class="form-group {{ $errors->has( 'codigo_barra' ) ? 'has-error' : '' }}">
-              <label class="control-label" for="codigo_barra">Código de barra: *</label>
-              <input id="codigo_barra" class="form-control" type="text" name="codigo_barra" maxlength="30" value="{{ old( 'codigo_barra' ) ? old( 'codigo_barra' ) : '' }}" placeholder="Código de barra" required>
+              <div class="form-group {{ $errors->has( 'codigo_barra_imagen' ) ? 'has-error' : '' }}">
+                <input id="codigo_barra_imagen" type="file" name="codigo_barra_imagen" accept="image/jpeg,image/png">
+                <span class="help-block">Formato admitido: JPEG, JPG, PNG</span>
+              </div>
             </div>
-          </div>
 
-          <div class="col-md-3">
-            <div class="form-group {{ $errors->has( 'codigo_arancelario' ) ? 'has-error' : '' }}">
-              <label class="control-label" for="codigo_arancelario">Código arancelario: *</label>
-              <input id="codigo_arancelario" class="form-control" type="text" name="codigo_arancelario" maxlength="30" value="{{ old( 'codigo_arancelario' ) ? old( 'codigo_arancelario' ) : '' }}" placeholder="Código arancelario" required>
+            <div class="col-md-3">
+              <div class="form-group {{ $errors->has( 'codigo_producto' ) ? 'has-error' : '' }}">
+                <label class="control-label" for="codigo_producto">Código de producto: *</label>
+                <input id="codigo_producto" class="form-control" type="text" name="codigo_producto" maxlength="30" value="{{ old( 'codigo_producto' ) ? old( 'codigo_producto' ) : '' }}" placeholder="Código de producto" required>
+              </div>
             </div>
           </div>
 
@@ -175,19 +169,48 @@
           <div class="col-md-4">
             <div class="form-group {{ $errors->has( 'empaque_master' ) ? 'has-error' : '' }}">
               <label class="control-label" for="empaque_master">Empaque master: *</label>
-              <input id="empaque_master" class="form-control" type="text" name="empaque_master" maxlength="30" value="{{ old( 'empaque_master' ) ? old( 'empaque_master' ) : '' }}" placeholder="Subempaque" required>
+              <input id="empaque_master" class="form-control" type="text" name="empaque_master" maxlength="30" value="{{ old( 'empaque_master' ) ? old( 'empaque_master' ) : '' }}" placeholder="Empaque master" required>
             </div>
           </div>
 
         </fieldset>
 
         <fielset class="col-md-12" style="margin-top: 20px">
-          <legend>Información arancelaria</legend>
+          <legend>Permisología</legend>
 
-          <div class="col-md-6">
+          <div class="col-md-12">
+            <h4 class="text-center" style="margin-top: 20px">Nacional</h4>
+          </div>
+
+          <div class="col-md-3">
             <div class="form-group {{ $errors->has( 'declaracion_jurada' ) ? 'has-error' : '' }}">
               <label class="control-label" for="declaracion_jurada">Declaración jurada: *</label>
               <input id="declaracion_jurada" type="file" name="declaracion_jurada" accept="application/pdf" required>
+              <span class="help-block">Formato admitido: PDF</span>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group {{ $errors->has( 'cpe' ) ? 'has-error' : '' }}">
+              <label class="control-label" for="cpe">CPE: *</label>
+              <input id="cpe" type="file" name="cpe" accept="application/pdf" required>
+              <span class="help-block">Formato admitido: PDF</span>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input id="cpe_limit" type="checkbox" name="cpe_limit"> Plazo limitado
+              </label>
+            </div>
+            <div class="form-group {{ $errors->has( 'cpe_expiracion' ) ? 'has-error' : '' }}" style="display: none">
+              <label class="control-label" for="cpe_expiracion">Fecha de expiración: *</label>
+              <input id="cpe_expiracion" class="form-control" type="text" name="cpe_expiracion" value="{{ old( 'cpe_expiracion' ) ? old( 'cpe_expiracion' ) : '' }}" placeholder="Expiración">
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group {{ $errors->has( 'codigo_arancelario' ) ? 'has-error' : '' }}">
+              <label class="control-label" for="codigo_arancelario">Código arancelario: *</label>
+              <input id="codigo_arancelario" type="file" name="codigo_arancelario" accept="application/pdf" required>
               <span class="help-block">Formato admitido: PDF</span>
             </div>
           </div>
@@ -205,7 +228,7 @@
           @endif
         </div>
 
-        <div class="form-group text-right">
+        <div class="col-md-12 text-right" style="margin-top: 20px">
           <a class="btn btn-flat btn-default" href="{{ route( 'productos.index' ) }}"><i class="fa fa-reply"></i> Atras</a>
           <button class="btn btn-flat btn-primary" type="submit"><i class="fa fa-send"></i> Guardar</button>
         </div>
@@ -218,10 +241,27 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $('#descripcion, #indicaciones').keyup(counter);
-    $('#descripcion, #indicaciones').keyup();
 
     //Asignar evento al cargar una imagen
-    $('#imagen,#etiqueta').change(preview);
+    $('#imagen, #etiqueta').change(preview);
+
+    $('#cpe_expiracion').datepicker({
+      format: 'dd-mm-yyyy',
+      startDate: 'today',
+      language: 'es',
+      keyboardNavigation: false,
+      autoclose: true
+    });
+
+    $('#cpe_limit').on('click', function(){
+      $('#cpe_expiracion').closest('.form-group').toggle(this.checked)
+      $('#cpe_expiracion').prop('required', this.checked)
+
+      if(!this.checked){
+        $('#cpe_expiracion').val('');
+      }
+      
+    })
   });
 
   function counter(){

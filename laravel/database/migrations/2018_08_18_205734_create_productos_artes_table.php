@@ -17,6 +17,8 @@ class CreateProductosArtesTable extends Migration
         $table->increments('id');
         $table->unsignedInteger('producto_id');
         $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+        $table->unsignedInteger('productos_carpetas_id')->nullable();
+        $table->foreign('productos_carpetas_id')->references('id')->on('productos_carpetas')->onDelete('cascade');
         $table->unsignedInteger('user_id');
         $table->foreign('user_id')->references('id')->on('users');
         $table->string('nombre', 100)->nullable();

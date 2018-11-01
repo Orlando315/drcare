@@ -21,7 +21,7 @@
 
           <div class="form-group {{ $errors->has( 'categoria' ) ? 'has-error' : '' }}">
             <label class="control-label" for="categoria">Categoria: *</label>
-            <input id="categoria" class="form-control" type="text" name="categoria" value="{{ old('categoria') ? old('categoria') : $categoria->categoria }}" placeholder="Categoria">
+            <input id="categoria" class="form-control" type="text" name="categoria" value="{{ old('categoria') ? old('categoria') : $categoria->categoria }}" placeholder="Categoria" required>
           </div>
 
           @if (count($errors) > 0)

@@ -35,6 +35,15 @@
       <!-- /.info-box -->
     </div>
     @endif
+
+    <div class="col-md-12" style="margin-top:0">
+      <a href="{{ route('about.index') }}" class="about-drcare">
+        <h3 class="text-muted text-center">
+          <i class="fa fa-exclamation-circle"></i><br>
+          Sobre Dr.Care
+        </h3>
+      </a>
+    </div>
   </div>
 
   <div class="row">
@@ -89,7 +98,6 @@
                 <th class="text-center">#</th>
                 <th class="text-center">Categoria</th>
                 <th class="text-center">Nombre</th>
-                <th class="text-center">CPE</th>
                 <th class="text-center">Codigo de Barra</th>
                 <th class="text-center">Codigo de Producto</th>
                 <th class="text-center">Accion</th>
@@ -101,7 +109,6 @@
                   <td>{{ $loop->index + 1 }}</td>
                   <td>{{ $d->categoria->categoria }}</td>
                   <td>{{ $d->nombre }}</td>
-                  <td>{{ $d->cpe }}</td>
                   <td>{{ $d->codigo_barra }}</td>
                   <td>{{ $d->codigo_producto }}</td>
                   <td>

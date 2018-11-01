@@ -129,7 +129,7 @@ class DepartamentosController extends Controller
       if( $departamento->cargos()->count() > 0 ){
         
         return redirect('departamentos')->with([
-          'flash_message' => '¡Error, este Departamento tiene Cargos agregados.',
+          'flash_message' => '¡Error - este Departamento tiene Cargos agregados.',
           'flash_class' => 'alert-danger',
           'flash_important' => true,
           ]);

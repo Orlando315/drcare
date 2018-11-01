@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth as Auth;
 use App\Producto;
 use App\ProductoCategoria as Categoria;
+use App\About;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AboutExpiracion;
 
 class ProductosController extends Controller
 {
@@ -43,7 +47,6 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-
       $this->validate($request, [
         'productos_categorias_id' => 'required',
         'nombre' => 'required',
@@ -51,10 +54,12 @@ class ProductosController extends Controller
         'etiqueta' => 'required|image',
         'descripcion' => 'required',
         'indicaciones' => 'required',
-        'cpe' => 'required|alpha_num',
+        'cpe' => 'required|file|mimes:pdf',
+        'cpe_expiracion' => 'nullable|required_with:cpe_limit|date_format:d-m-Y',
         'codigo_producto' => 'required|alpha_num',
         'codigo_barra' => 'required|alpha_num',
-        'codigo_arancelario' => 'required|alpha_num',
+        'codigo_barra_imagen' => 'nullable|image',
+        'codigo_arancelario' => 'required|file|mimes:pdf',
         'hoja_tecnica_seguridad' => 'required|file|mimes:pdf',
         'permiso_sanitario' => 'required|file|mimes:pdf',
         'peso' => 'required|numeric',
@@ -79,6 +84,12 @@ class ProductosController extends Controller
         $producto->hoja_tecnica_seguridad = $request->file('hoja_tecnica_seguridad')->store($directory);
         $producto->permiso_sanitario = $request->file('permiso_sanitario')->store($directory);
         $producto->declaracion_jurada = $request->file('declaracion_jurada')->store($directory);
+        $producto->cpe = $request->file('cpe')->store($directory);
+        $producto->codigo_arancelario = $request->file('codigo_arancelario')->store($directory);
+
+        if($request->hasFile('codigo_barra_imagen')){
+          $producto->codigo_barra_imagen = $request->file('codigo_barra_imagen')->store($directory);
+        }
 
         $producto->save();
 
@@ -142,10 +153,12 @@ class ProductosController extends Controller
         'etiqueta' => 'nullable|image',
         'descripcion' => 'required',
         'indicaciones' => 'required',
-        'cpe' => 'required|alpha_num',
+        'cpe' => 'nullable|file|mimes:pdf',
+        'cpe_expiracion' => 'nullable|required_with:cpe_limit|date_format:d-m-Y',
         'codigo_producto' => 'required|alpha_num',
         'codigo_barra' => 'required|alpha_num',
-        'codigo_arancelario' => 'required|alpha_num',
+        'codigo_barra_imagen' => 'nullable|image',
+        'codigo_arancelario' => 'nullable|file|mimes:pdf',
         'hoja_tecnica_seguridad' => 'nullable|file|mimes:pdf',
         'permiso_sanitario' => 'nullable|file|mimes:pdf',
         'peso' => 'required|numeric',
@@ -184,6 +197,16 @@ class ProductosController extends Controller
         if( $request->hasFile( 'declaracion_jurada' ) ){
           Storage::delete( $producto->declaracion_jurada );
           $producto->declaracion_jurada = $request->file('declaracion_jurada')->store($directory);
+        }
+
+        if( $request->hasFile( 'cpe' ) ){
+          Storage::delete( $producto->cpe );
+          $producto->cpe = $request->file('cpe')->store($directory);
+        }
+
+        if($request->hasFile('codigo_barra_imagen')){
+          Storage::delete( $producto->codigo_barra_imagen );
+          $producto->codigo_barra_imagen = $request->file('codigo_barra_imagen')->store($directory);
         }
 
         $producto->save();
